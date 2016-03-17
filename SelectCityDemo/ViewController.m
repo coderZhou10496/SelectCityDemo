@@ -7,16 +7,29 @@
 //
 
 #import "ViewController.h"
-
+#import "CityViewController.h"
 @interface ViewController ()
+
+@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
 
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+}
+- (IBAction)click:(id)sender
+{
+    
+    CityViewController *controller = [[CityViewController alloc] init];
+    controller.currentCityString = @"杭州";
+    controller.selectString = ^(NSString *string){
+        self.cityLabel.text = string;
+    };
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
