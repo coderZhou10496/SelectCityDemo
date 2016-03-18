@@ -260,17 +260,14 @@
     }
     else
     {
-        NSLog(@"111");
         //证明输入的是汉字
         [self.searchArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSArray *sectionArray  = obj;
             NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@",string];
             NSArray *array = [sectionArray filteredArrayUsingPredicate:pred];
             [resultArray addObjectsFromArray:array];
-            NSLog(@"%@",resultArray);
         }];
     }
-    NSLog(@"222");
     self.resultController.dataArray = resultArray;
     [self.resultController.tableView reloadData];
 }
