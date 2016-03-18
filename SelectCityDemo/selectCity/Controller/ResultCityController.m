@@ -9,17 +9,24 @@
 #import "ResultCityController.h"
 
 @implementation ResultCityController
+-(UITableView *)tableView
+{
+    if(!_tableView)
+    {
+        _tableView =[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.showsVerticalScrollIndicator = NO;
+        [self.view addSubview:_tableView];
+    }
+    return _tableView;
+}
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-  //  NSLog(@"ResultCityController");
     self.view.backgroundColor = [UIColor whiteColor];
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-   // _tableView.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:_tableView];
+    
+
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

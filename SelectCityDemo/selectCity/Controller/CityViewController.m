@@ -22,6 +22,7 @@
 @property (nonatomic,retain)NSMutableArray *sectionTitlesArray; // 区头数组
 @property (nonatomic,retain)NSMutableArray *rightIndexArray; // 右边索引数组
 @property (nonatomic,retain)NSMutableArray *dataArray;// cell数据源数组
+@property (nonatomic,retain)NSMutableArray *searchArray;//用于搜索的数组
 @property (nonatomic,retain)NSMutableArray *pinYinArray; // 地区名字转化为拼音的数组
 @property (nonatomic,retain)ResultCityController *resultController;//显示结果的controller
 @property (nonatomic,retain)NSArray *currentCityArray;// 当前城市
@@ -29,6 +30,7 @@
 @end
 
 @implementation CityViewController
+
 -(UIView *)blackView
 {
     if(!_blackView)
@@ -258,15 +260,17 @@
     }
     else
     {
+        NSLog(@"111");
         //证明输入的是汉字
-        [self.dataArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [self.searchArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSArray *sectionArray  = obj;
             NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@",string];
             NSArray *array = [sectionArray filteredArrayUsingPredicate:pred];
             [resultArray addObjectsFromArray:array];
-            
+            NSLog(@"%@",resultArray);
         }];
     }
+    NSLog(@"222");
     self.resultController.dataArray = resultArray;
     [self.resultController.tableView reloadData];
 }
@@ -324,6 +328,7 @@
     self.rightIndexArray = [NSMutableArray array];
     self.sectionTitlesArray = [NSMutableArray array]; //区头字母数组
     self.dataArray = [NSMutableArray array]; //包含所有区数组的大数组
+    self.searchArray = [NSMutableArray array];
     NSString *path=[[NSBundle mainBundle] pathForResource:@"citydict"
                                                    ofType:@"plist"];
     self.bigDic = [[NSDictionary alloc] initWithContentsOfFile:path];
@@ -332,6 +337,7 @@
     [self.sectionTitlesArray enumerateObjectsUsingBlock:^(NSString *zimu, NSUInteger idx, BOOL * _Nonnull stop) {
         NSArray *smallArray = self.bigDic[zimu];
         [self.dataArray addObject:smallArray];
+        [self.searchArray addObject:smallArray];
     }];
     [self.rightIndexArray addObjectsFromArray:self.sectionTitlesArray];
     [self.rightIndexArray insertObject:UITableViewIndexSearch atIndex:0];
