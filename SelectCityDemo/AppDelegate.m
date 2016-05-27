@@ -16,6 +16,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // 自己实现的城市列表选择界面
     // Override point for customization after application launch.
     return YES;
 }
